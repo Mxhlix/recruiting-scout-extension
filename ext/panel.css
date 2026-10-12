@@ -1,0 +1,87 @@
+:root{
+  --ac:#0b57d0;
+  --ac-weak:#e8f0fe;
+  --ink:#1f1f1f;
+  --sub:#5f6368;
+  --line:#e3e3e3;
+  --ok:#146c2e;
+  --ok-weak:#e6f4ea;
+  --ng:#b3261e;
+  --ng-weak:#fce8e6;
+  --busy:#e8710a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{display:flex;flex-direction:column;background:#fff;color:var(--ink);
+  font:13px/1.55 "Yu Gothic UI","Meiryo","Hiragino Sans",system-ui,sans-serif}
+button{font:inherit;color:inherit}
+
+.head{display:flex;align-items:center;padding:14px 16px 4px}
+.title{font-size:16px;font-weight:700;flex:1}
+.x{border:0;background:none;font-size:22px;line-height:1;cursor:pointer;color:var(--sub);padding:2px 6px}
+
+.tabs{display:flex;gap:4px;padding:6px 12px 0;border-bottom:1px solid var(--line)}
+.tabs button{border:0;background:none;padding:7px 12px;cursor:pointer;color:var(--sub);border-bottom:3px solid transparent;font-weight:600}
+.tabs button.on{color:var(--ac);border-bottom-color:var(--ac)}
+
+.view{flex:1;overflow-y:auto;padding:12px 16px 18px}
+
+.sum{background:#f6f7f9;border-radius:8px;padding:8px 12px;font-size:12.5px}
+.sum div{display:flex;gap:10px}
+.sum .k{color:var(--sub);width:84px;flex:none}
+.ctl{display:flex;gap:8px;align-items:center;margin:10px 0}
+.primary{flex:1;border:0;border-radius:8px;padding:10px;background:var(--ac);color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+.primary:disabled{background:#c7cbd1;cursor:default}
+.line{border:1px solid var(--ac);border-radius:8px;padding:9px 14px;background:#fff;color:var(--ac);font-weight:700;cursor:pointer}
+.line:disabled{border-color:#c7cbd1;color:#9aa0a6;cursor:default}
+
+.msg{background:var(--ac-weak);border-radius:6px;padding:7px 10px;font-size:12.5px;margin-bottom:10px}
+.msg.ok{background:var(--ok-weak);color:var(--ok);font-weight:700}
+.msg.err{background:var(--ng-weak);color:var(--ng);font-weight:700}
+
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.item{border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.line1{display:flex;align-items:center;gap:8px}
+.code{font-weight:700}
+.badge{margin-left:auto;font-size:12px;font-weight:700;border-radius:10px;padding:0 9px;background:#eef0f2;color:var(--sub)}
+.ttl{font-size:12px;color:var(--sub)}
+.why{font-size:12.5px;margin-top:3px}
+.st-busy{border-color:var(--busy)}
+.st-busy .badge{background:#fdebd8;color:#9a4700}
+.st-sent{border-color:#a8d5b5;background:#f7fbf8}
+.st-sent .badge{background:var(--ok-weak);color:var(--ok)}
+.st-skip .badge{background:#f1f3f4;color:#444}
+.st-skip .why{color:#444}
+.st-err .badge{background:var(--ng-weak);color:var(--ng)}
+.mail{margin-top:6px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:6px 8px}
+.subj{font-weight:700;font-size:12.5px}
+.txt{white-space:pre-wrap;font-size:12px;max-height:132px;overflow:hidden}
+
+.fields h3{font-size:13px;margin:14px 0 4px;color:var(--sub)}
+.fields h3:first-child{margin-top:0}
+.fields label{display:block;font-size:12px;color:var(--sub);margin-top:6px}
+.fields input,.fields textarea{display:block;width:100%;margin-top:2px;font:inherit;font-size:12.5px;color:var(--ink);
+  padding:5px 8px;border:1px solid #c9ccd1;border-radius:5px;resize:vertical}
+.two{display:flex;gap:8px}
+.two label{flex:1}
+.note{font-size:12px;color:var(--ok)}
+
+.hist{width:100%;border-collapse:collapse;font-size:12px}
+.hist th{text-align:left;color:var(--sub);font-weight:600;border-bottom:1px solid var(--line);padding:4px}
+.hist td{border-bottom:1px solid #f0f0f0;padding:5px 4px;vertical-align:top}
+.hist td:nth-child(1){white-space:nowrap;color:var(--sub)}
+.hist td:nth-child(2){white-space:nowrap;font-weight:700}
+.hist td:nth-child(3){white-space:nowrap}
+.hist .r-sent td:nth-child(3){color:var(--ok);font-weight:700}
+
+.st-review{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac-weak)}
+.st-review .badge{background:var(--ac);color:#fff}
+.decide{display:flex;gap:8px;margin-top:8px}
+.decide .primary{padding:7px;font-size:14px}
+.decide .line{padding:6px 14px}
+.note-r{font-size:12px;color:var(--sub);margin-top:6px}
+.st-review .txt{max-height:none}
+mark.ai{background:#fff3c4;color:inherit;border-radius:2px}
+.hint{font-size:12px;color:var(--sub);margin:0 0 4px}
+.fields label.chk{display:flex;align-items:center;gap:6px;color:var(--ink);font-size:12.5px;margin-top:8px}
+.fields label.chk input{display:inline-block;width:auto;margin:0}

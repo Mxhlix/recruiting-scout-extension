@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>職務経歴書</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">スカウト管理</div>
+  <nav><a id="back" href="index.html">候補者検索</a> ＞ 職務経歴書</nav>
+</header>
+<div class="wrap">
+  <div class="head">
+    <div class="who">
+      <div class="code" id="code"></div>
+      <div class="meta" id="meta"></div>
+    </div>
+    <button class="btn" id="open" type="button">スカウトを送る</button>
+  </div>
+  <div class="body">
+    <div class="menu" id="menu"></div>
+    <section class="pane" id="pane"><h2></h2><div class="text"></div></section>
+  </div>
+  <form class="form" id="form" hidden>
+    <h3>スカウトを送る</h3>
+    <label for="subject">件名</label>
+    <input id="subject" name="subject">
+    <label for="message">本文</label>
+    <textarea id="message" name="message"></textarea>
+    <div class="act"><button class="btn" id="send" type="submit">送信する</button></div>
+  </form>
+  <div class="done" id="done" hidden>スカウトを送信しました</div>
+</div>
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const c = findCandidate(params.get('code'));
+  if (params.get('q') !== null) document.getElementById('back').href = 'index.html?q=' + encodeURIComponent(params.get('q'));
+  document.getElementById('code').textContent = c.code;
+  document.getElementById('meta').textContent = c.age + '歳 ／ ' + c.title + ' ／ 最終ログイン: ' + c.login;
+
+  const menu = document.getElementById('menu');
+  const pane = document.getElementById('pane');
+  function show(name) {
+    menu.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.sec === name));
+    pane.querySelector('h2').textContent = name;
+    const v = c.s[name] || '';
+    const t = pane.querySelector('.text');
+    t.textContent = v || '入力されていません';
+    t.classList.toggle('empty', !v);
+  }
+  for (const name of SECTIONS) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.dataset.sec = name;
+    b.textContent = name;
+    b.addEventListener('click', () => show(name));
+    menu.appendChild(b);
+  }
+  show(SECTIONS[0]);
+
+  const $open = document.getElementById('open');
+  const $form = document.getElementById('form');
+  function markSent() {
+    $open.textContent = '送信済み';
+    $open.disabled = true;
+    $form.hidden = true;
+  }
+  if (Sent.has(c.code)) markSent();
+  $open.addEventListener('click', () => { $form.hidden = false; $form.scrollIntoView({ block: 'nearest' }); });
+  $form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const subject = document.getElementById('subject').value.trim();
+    const body = document.getElementById('message').value.trim();
+    if (!subject || !body) return;
+    Sent.add(c.code, { at: new Date().toISOString(), subject, body });
+    markSent();
+    document.getElementById('done').hidden = false;
+  });
+</script>
+</body>
+</html>

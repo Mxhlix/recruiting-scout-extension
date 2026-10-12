@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>スカウト送信の補助</title>
+<link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <header class="head">
+    <div class="title">スカウト送信の補助</div>
+    <button id="close" class="x" aria-label="閉じる">×</button>
+  </header>
+  <nav class="tabs">
+    <button data-tab="run" class="on">実行</button>
+    <button data-tab="job">求人と条件</button>
+    <button data-tab="hist">履歴</button>
+  </nav>
+
+  <!-- 実行 -->
+  <section class="view" id="v-run">
+    <div class="sum">
+      <div><span class="k">検索する言葉</span><span id="s-q"></span></div>
+      <div><span class="k">送る前の確認</span><span>1通ずつ担当者が確かめてから送る</span></div>
+      <div><span class="k">本日</span><span id="s-today"></span></div>
+    </div>
+    <div class="ctl">
+      <button id="start" class="primary">開始</button>
+      <button id="stop" class="line" disabled>止める</button>
+    </div>
+    <div id="msg" class="msg" hidden></div>
+    <ol id="items" class="items"></ol>
+  </section>
+
+  <!-- 求人と条件 -->
+  <section class="view" id="v-job" hidden>
+    <form id="jobform" class="fields">
+      <h3>求人</h3>
+      <label>会社名<input name="job.company"></label>
+      <label>求人名<input name="job.title"></label>
+      <label>仕事の中身<textarea name="job.detail" rows="3"></textarea></label>
+      <label>必須の条件<textarea name="job.must" rows="2"></textarea></label>
+      <label>歓迎する経験<textarea name="job.want" rows="2"></textarea></label>
+      <label>勤務地と働き方<input name="job.place"></label>
+      <label>年収<input name="job.salary"></label>
+      <h3>送る文面のひな形</h3>
+      <p class="hint">{書き出し} と {合う所} だけをAIが候補者ごとに書きます。ほかの文はこのまま送ります。</p>
+      <label>件名<input name="job.subjectTpl"></label>
+      <label>本文<textarea name="job.bodyTpl" rows="12"></textarea></label>
+      <label>AIが書く2か所の方針<textarea name="job.policy" rows="3"></textarea></label>
+      <h3>探し方と送り方</h3>
+      <label>検索する言葉（スペースで区切る）<input name="settings.q"></label>
+      <div class="two">
+        <label>1日に送る上限（通）<input name="settings.dailyCap" type="number" min="1"></label>
+        <label>1日に開く上限（人）<input name="settings.dailyReadCap" type="number" min="1"></label>
+      </div>
+      <h3>AI</h3>
+      <label>AIのモデル<input name="settings.model"></label>
+      <label>AIのキー<input name="apiKey" type="password" autocomplete="off"></label>
+      <p class="note" id="saved" hidden>保存しました</p>
+    </form>
+  </section>
+
+  <!-- 履歴 -->
+  <section class="view" id="v-hist" hidden>
+    <div class="ctl">
+      <button id="csv" class="line">CSVで保存</button>
+      <span class="note" id="h-count"></span>
+    </div>
+    <table class="hist">
+      <thead><tr><th>日時</th><th>候補者</th><th>結果</th><th>理由</th></tr></thead>
+      <tbody id="h-rows"></tbody>
+    </table>
+  </section>
+<script src="panel.js"></script>
+</body>
+</html>

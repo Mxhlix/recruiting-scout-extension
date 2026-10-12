@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>候補者検索</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">スカウト管理</div>
+  <nav>候補者検索</nav>
+</header>
+<div class="wrap">
+  <form class="search" id="search">
+    <label for="q">キーワード</label>
+    <input id="q" name="q" placeholder="職務経歴書に含まれる言葉（スペースで区切る）">
+    <button class="btn" id="go" type="submit">検索</button>
+  </form>
+  <div class="count" id="count"></div>
+  <table class="rows" id="rows" hidden>
+    <thead><tr><th>候補者</th><th>年齢</th><th>現職</th><th>希望年収</th><th>最終ログイン</th><th>スカウト</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+<script src="data.js"></script>
+<script src="common.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const q = params.get('q');
+  const $q = document.getElementById('q');
+  $q.value = q || '';
+  document.getElementById('search').addEventListener('submit', (e) => {
+    e.preventDefault();
+    location.search = '?q=' + encodeURIComponent($q.value.trim());
+  });
+  if (q !== null) {
+    const hits = searchCandidates(q);
+    document.getElementById('count').innerHTML = '該当 <b>' + hits.length + '</b> 人';
+    const tb = document.querySelector('#rows tbody');
+    for (const c of hits) {
+      const tr = document.createElement('tr');
+      tr.className = 'row';
+      tr.dataset.code = c.code;
+      tr.innerHTML =
+        '<td class="code"><a href="candidate.html?code=' + c.code + '&q=' + encodeURIComponent(q) + '">' + c.code + '</a></td>' +
+        '<td>' + c.age + '歳</td><td>' + c.title + '</td><td>' + c.wage + '</td>' +
+        '<td class="muted">' + c.login + '</td>' +
+        '<td>' + (Sent.has(c.code) ? '<span class="sent">送信済み</span>' : '<span class="muted">未送信</span>') + '</td>';
+      tb.appendChild(tr);
+    }
+    document.getElementById('rows').hidden = false;
+  }
+</script>
+</body>
+</html>
